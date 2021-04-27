@@ -48,7 +48,7 @@ public class Consumer {
          * }
          * </pre>
          */
-
+        consumer.setNamesrvAddr("127.0.0.1:9876");
         /*
          * Specify where to start in case the specified consumer group is a brand new one.
          */
@@ -67,6 +67,9 @@ public class Consumer {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
                 ConsumeConcurrentlyContext context) {
+                for (MessageExt messageExt : msgs) {
+                    System.err.println("接收到的消息："+new String(messageExt.getBody()));
+                }
                 System.out.printf("%s Receive New Messages: %s %n", Thread.currentThread().getName(), msgs);
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
